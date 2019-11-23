@@ -1,0 +1,3 @@
+include ':app', ':smslibrary'
+rootProject.name='PhoneRinger'
+project(':smslibrary').projectDir = new File('library/smslibrary')
