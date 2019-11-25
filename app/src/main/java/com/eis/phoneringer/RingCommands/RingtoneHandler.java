@@ -30,6 +30,8 @@ public class RingtoneHandler {
      * @return the singleton
      */
     public static RingtoneHandler getInstance() {
+        if(ringtoneHandler == null)
+            ringtoneHandler = new RingtoneHandler();
         return ringtoneHandler;
     }
 
