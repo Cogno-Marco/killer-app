@@ -4,6 +4,11 @@ import android.content.Context;
 
 import it.lucacrema.preferences.PreferencesManager;
 
+/**
+ * Class used to control the saving of a password
+ *
+ * @author Alberto Ursino
+ */
 public class PasswordManager {
 
     /**
