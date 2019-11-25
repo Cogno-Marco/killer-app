@@ -20,9 +20,12 @@ public class RingtoneHandler {
     /**
      * defaultRingtone instantiated in getDefaultTone
      */
-    private static Ringtone defaultRingtone;
+    private static Ringtone defaultRingtone = null;
 
-    private static RingtoneHandler instance = new RingtoneHandler();
+    /**
+     * Instance of the class that is instantiated in getInstance method
+     */
+    private static RingtoneHandler instance = null;
 
     /**
      * Private constructor
