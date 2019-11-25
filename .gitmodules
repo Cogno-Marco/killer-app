@@ -1,3 +1,4 @@
-[submodule "smslibrary"]
-	path = smslibrary
+
+[submodule "library"]
+	path = library
 	url = https://github.com/Cogno-IDU/smslibrary.git
