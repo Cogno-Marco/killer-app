@@ -17,8 +17,12 @@ import androidx.annotation.RequiresApi;
  */
 public class RingtoneHandler {
 
+    /**
+     * defaultRingtone instantiated in getDefaultTone
+     */
     private static Ringtone defaultRingtone;
-    private static RingtoneHandler ringtoneHandler = new RingtoneHandler();
+
+    private static RingtoneHandler instance = new RingtoneHandler();
 
     /**
      * Private constructor
@@ -27,18 +31,17 @@ public class RingtoneHandler {
     }
 
     /**
-     * @return the singleton
+     * @return the RingtoneHandler instance
      */
     public static RingtoneHandler getInstance() {
-        if(ringtoneHandler == null)
-            ringtoneHandler = new RingtoneHandler();
-        return ringtoneHandler;
+        if (instance == null)
+            instance = new RingtoneHandler();
+        return instance;
     }
 
     /**
-     * Get the tone of the specified type
-     *
      * @param context of the application
+     * @param type    of the wanted tone
      * @return the requested tone
      */
     public Ringtone getDefaultTone(Context context, int type) {
