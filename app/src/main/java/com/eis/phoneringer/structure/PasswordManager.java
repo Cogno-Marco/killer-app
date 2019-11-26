@@ -1,4 +1,4 @@
-package com.eis.phoneringer.RingCommands;
+package com.eis.phoneringer.structure;
 
 import android.content.Context;
 
