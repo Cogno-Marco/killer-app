@@ -1,3 +1,4 @@
-include ':app', ':smslibrary'
+include ':app', ':smslibrary', ':preferences'
 rootProject.name='PhoneRinger'
 project(':smslibrary').projectDir = new File('library/smslibrary')
+project(':preferences').projectDir = new File('android-preferences/preferences')
