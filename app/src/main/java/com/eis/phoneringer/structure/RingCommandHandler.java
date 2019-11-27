@@ -10,7 +10,11 @@ import com.eis.smslibrary.SMSPeer;
 public class RingCommandHandler {
 
     public static final String SPLIT_CHARACTER = "_";
-    private static RingCommandHandler instance = new RingCommandHandler();
+
+    /**
+     * Instance of the class that is instantiated in getInstance method
+     */
+    private static RingCommandHandler instance = null;
 
     /**
      * Private constructor
@@ -19,9 +23,11 @@ public class RingCommandHandler {
     }
 
     /**
-     * @return the singleton
+     * @return the RingCommandHandler instance
      */
     public static RingCommandHandler getInstance() {
+        if(instance == null)
+            instance = new RingCommandHandler();
         return instance;
     }
 
