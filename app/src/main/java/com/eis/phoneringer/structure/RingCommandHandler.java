@@ -3,7 +3,7 @@ package com.eis.phoneringer.structure;
 import com.eis.smslibrary.SMSMessage;
 
 /**
- * Class used to parse RingCommand to SMSMessage and back *
+ * Class used to parse RingCommand to SMSMessage and back
  *
  * @author Alberto Ursino, Luca Crema, Marco Mariotto
  */
