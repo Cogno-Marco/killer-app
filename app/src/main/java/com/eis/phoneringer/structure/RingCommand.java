@@ -7,7 +7,6 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Alberto Ursino, Luca Crema
  */
-
 public class RingCommand {
 
     private SMSPeer peer;

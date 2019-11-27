@@ -6,6 +6,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Unit testing of the class RingCommand
+ *
+ * @author Alberto Ursino
+ */
 public class RingCommandTest {
 
     RingCommand ringCommand = null;
@@ -47,4 +52,5 @@ public class RingCommandTest {
             Assert.fail(SHOULD_NOT);
         }
     }
+
 }
