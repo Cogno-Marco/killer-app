@@ -7,7 +7,6 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Alberto Ursino, Luca Crema, Marco Mariotto
  */
-
 public class RingCommandHandler {
 
     public static final String SPLIT_CHARACTER = "_";
