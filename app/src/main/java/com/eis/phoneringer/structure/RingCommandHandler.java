@@ -1,9 +1,6 @@
 package com.eis.phoneringer.structure;
 
-import android.content.Context;
-
 import com.eis.smslibrary.SMSMessage;
-import com.eis.smslibrary.SMSPeer;
 
 /**
  * Class used to parse RingCommand to SMSMessage and back *
@@ -54,11 +51,10 @@ public class RingCommandHandler {
      * Extracts the password and the peer from the RingCommand and creates a SMSMessage object
      *
      * @param ringCommand to parse, it must be a valid one
-     * @param context     of the application
      * @return a SMSMessage object
      */
-    public SMSMessage parseCommand(Context context, RingCommand ringCommand) {
-        return new SMSMessage(context, ringCommand.getPeer().toString(), ringCommand.getPassword());
+    public SMSMessage parseCommand(RingCommand ringCommand) {
+        return new SMSMessage(ringCommand.getPeer(), ringCommand.getPassword());
     }
 
 }
