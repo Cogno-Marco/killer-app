@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.eis.smslibrary.SMSHandler;
@@ -47,10 +48,10 @@ public class AppManager {
      * If the password of the message received is valid then play ringtone for fixed amount of time
      *
      * @param context     of the application
-     * @param ringCommand a ring command not null
+     * @param ringCommand received
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void onRingCommandReceived(Context context, RingCommand ringCommand, final Ringtone ringtone) {
+    public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) {
         final RingtoneHandler ringtoneHandler = RingtoneHandler.getInstance();
 
         if (checkPassword(context, ringCommand)) {
@@ -75,7 +76,7 @@ public class AppManager {
      * @throws InvalidTelephoneNumberException
      * @throws InvalidSMSMessageException
      */
-    public void sendCommand(Context context, RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
+    public void sendCommand(Context context, @NonNull RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
         SMSHandler smsHandler = SMSHandler.getInstance();
         smsHandler.setup(context);
         smsHandler.sendMessage(RingCommandHandler.getInstance().parseCommand(ringCommand));
@@ -86,9 +87,9 @@ public class AppManager {
      *
      * @param context     a valid context
      * @param ringCommand a valid RingCommand object
-     * @return a boolean: true = passwords are corresponding, false = passwords are NOT corresponding
+     * @return a boolean: true if passwords corresponds, false otherwise
      */
-    public boolean checkPassword(Context context, RingCommand ringCommand) {
+    public boolean checkPassword(Context context, @NonNull RingCommand ringCommand) {
         return ringCommand.getPassword().equals(new PasswordManager(context).getPassword());
     }
 
