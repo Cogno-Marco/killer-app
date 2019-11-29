@@ -75,7 +75,7 @@ public class AppManager {
      * @param context     of the application
      * @param ringCommand to send
      */
-    public void sendCommand(Context context, @NonNull RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
+    public void sendCommand(Context context, @NonNull RingCommand ringCommand) {
         SMSHandler smsHandler = SMSHandler.getInstance();
         smsHandler.setup(context);
         smsHandler.sendMessage(RingCommandHandler.getInstance().parseCommand(ringCommand));
