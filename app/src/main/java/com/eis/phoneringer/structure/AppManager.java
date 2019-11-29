@@ -49,6 +49,7 @@ public class AppManager {
      *
      * @param context     of the application
      * @param ringCommand received
+     * @param ringtone    to be played
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) {
@@ -73,8 +74,6 @@ public class AppManager {
      *
      * @param context     of the application
      * @param ringCommand to send
-     * @throws InvalidTelephoneNumberException
-     * @throws InvalidSMSMessageException
      */
     public void sendCommand(Context context, @NonNull RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
         SMSHandler smsHandler = SMSHandler.getInstance();
@@ -89,7 +88,7 @@ public class AppManager {
      * @param ringCommand a valid RingCommand object
      * @return a boolean: true if passwords corresponds, false otherwise
      */
-    public boolean checkPassword(Context context, @NonNull RingCommand ringCommand) {
+    private boolean checkPassword(Context context, @NonNull RingCommand ringCommand) {
         return ringCommand.getPassword().equals(new PasswordManager(context).getPassword());
     }
 
