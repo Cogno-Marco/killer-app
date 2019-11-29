@@ -45,7 +45,7 @@ public class AppManager {
     }
 
     /**
-     * If the password of the message received is valid then play ringtone for fixed amount of time
+     * If the password of the RingCommand received is valid then play ringtone for fixed amount of time
      *
      * @param context     of the application
      * @param ringCommand received
