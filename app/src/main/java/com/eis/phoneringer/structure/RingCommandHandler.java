@@ -1,6 +1,8 @@
 package com.eis.phoneringer.structure;
 
 import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.exceptions.InvalidSMSMessageException;
+import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
 
 /**
  * Class used to parse RingCommand to SMSMessage and back
@@ -52,8 +54,10 @@ public class RingCommandHandler {
      *
      * @param ringCommand to parse, it must be a valid one
      * @return a SMSMessage object
+     * @throws InvalidSMSMessageException      thrown when an SMSMessage received invalid params
+     * @throws InvalidTelephoneNumberException thrown when the phone number is not valid
      */
-    public SMSMessage parseCommand(RingCommand ringCommand) {
+    public SMSMessage parseCommand(RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
         return new SMSMessage(ringCommand.getPeer(), ringCommand.getPassword());
     }
 
