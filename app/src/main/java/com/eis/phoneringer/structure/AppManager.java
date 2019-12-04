@@ -51,20 +51,22 @@ public class AppManager {
      * @throws IllegalPasswordException Exception thrown when the password received is not valid
      */
     public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) throws IllegalPasswordException {
+        //Instantiation of the RingtoneHandler singleton class, will be used below
         final RingtoneHandler ringtoneHandler = RingtoneHandler.getInstance();
 
-        if (checkPassword(context, ringCommand)) {
-            ringtoneHandler.playRingtone(ringtone);
-            //Timer: the ringtone is playing for TIMEOUT_TIME seconds.
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ringtoneHandler.stopRingtone(ringtone);
-                }
-            }, TIMEOUT_TIME);
-        } else {
+        //Controls if the password in the RingCommand object corresponds with the one in memory, if not then launches an exception
+        if (!(checkPassword(context, ringCommand)))
             throw new IllegalPasswordException();
-        }
+
+        //Exception weren't thrown so let's play the ringtone!
+        ringtoneHandler.playRingtone(ringtone);
+        //Timer: the ringtone is playing for TIMEOUT_TIME seconds.
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ringtoneHandler.stopRingtone(ringtone);
+            }
+        }, TIMEOUT_TIME);
     }
 
     /**
