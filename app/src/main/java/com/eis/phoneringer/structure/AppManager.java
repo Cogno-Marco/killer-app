@@ -2,14 +2,12 @@ package com.eis.phoneringer.structure;
 
 import android.content.Context;
 import android.media.Ringtone;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
-import com.eis.phoneringer.exceptions.WrongPasswordException;
+import com.eis.phoneringer.exceptions.IllegalPasswordException;
 import com.eis.smslibrary.SMSHandler;
 import com.eis.smslibrary.exceptions.InvalidSMSMessageException;
 import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
@@ -50,9 +48,9 @@ public class AppManager {
      * @param context     of the application
      * @param ringCommand received
      * @param ringtone    A valid ringtone to be played
-     * @throws WrongPasswordException Exception thrown when the password received is not valid
+     * @throws IllegalPasswordException Exception thrown when the password received is not valid
      */
-    public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) throws WrongPasswordException {
+    public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) throws IllegalPasswordException {
         final RingtoneHandler ringtoneHandler = RingtoneHandler.getInstance();
 
         if (checkPassword(context, ringCommand)) {
@@ -65,7 +63,7 @@ public class AppManager {
                 }
             }, TIMEOUT_TIME);
         } else {
-            throw new WrongPasswordException();
+            throw new IllegalPasswordException();
         }
     }
 

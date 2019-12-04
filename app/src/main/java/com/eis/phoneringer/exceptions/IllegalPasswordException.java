@@ -5,6 +5,6 @@ package com.eis.phoneringer.exceptions;
  *
  * @author Alberto Ursino
  */
-public class WrongPasswordException extends RuntimeException {
+public class IllegalPasswordException extends RuntimeException {
 
 }

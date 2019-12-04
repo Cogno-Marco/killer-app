@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.eis.phoneringer.exceptions.WrongPasswordException;
+import com.eis.phoneringer.exceptions.IllegalPasswordException;
 import com.eis.smslibrary.SMSPeer;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class AppManagerTest {
         passwordManager = new PasswordManager(context);
     }
 
-    @Test(expected = WrongPasswordException.class)
+    @Test(expected = IllegalPasswordException.class)
     public void onRingCommandReceived_wrong_password() {
         passwordManager.setPassword(VALID_PASSWORD);
         appManager.getInstance().onRingCommandReceived(context, new RingCommand(new SMSPeer(VALID_PHONE_NUMBER), WRONG_PASSWORD), ringtoneHandler.getDefaultRingtone(context));
