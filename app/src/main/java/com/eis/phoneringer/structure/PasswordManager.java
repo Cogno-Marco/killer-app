@@ -2,7 +2,7 @@ package com.eis.phoneringer.structure;
 
 import android.content.Context;
 
-import com.eis.preferences.PreferencesManager;
+import it.lucacrema.preferences.PreferencesManager;
 
 /**
  * Class used to control the saving of a password
