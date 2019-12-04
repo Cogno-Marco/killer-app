@@ -52,7 +52,6 @@ public class AppManager {
      * @param ringtone    A valid ringtone to be played
      * @throws WrongPasswordException Exception thrown when the password received is not valid
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) throws WrongPasswordException {
         final RingtoneHandler ringtoneHandler = RingtoneHandler.getInstance();
 

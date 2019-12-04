@@ -7,7 +7,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.eis.phoneringer.exceptions.WrongPasswordException;
 import com.eis.smslibrary.SMSPeer;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,26 +27,16 @@ public class AppManagerTest {
         passwordManager = new PasswordManager(context);
     }
 
-    @Test
+    @Test(expected = WrongPasswordException.class)
     public void onRingCommandReceived_wrong_password() {
         passwordManager.setPassword(VALID_PASSWORD);
-        try {
-            appManager.getInstance().onRingCommandReceived(context, new RingCommand(new SMSPeer(VALID_PHONE_NUMBER), WRONG_PASSWORD), ringtoneHandler.getDefaultRingtone(context));
-            Assert.fail("Should has thrown the WrongPasswordException");
-        } catch (WrongPasswordException e) {
-            //Success
-        }
+        appManager.getInstance().onRingCommandReceived(context, new RingCommand(new SMSPeer(VALID_PHONE_NUMBER), WRONG_PASSWORD), ringtoneHandler.getDefaultRingtone(context));
     }
 
     @Test
     public void onRingCommandReceived_right_password() {
         passwordManager.setPassword(VALID_PASSWORD);
-        try {
-            appManager.getInstance().onRingCommandReceived(context, new RingCommand(new SMSPeer(VALID_PHONE_NUMBER), VALID_PASSWORD), ringtoneHandler.getDefaultRingtone(context));
-            //Success
-        } catch (WrongPasswordException e) {
-            Assert.fail("Should hasn't thrown the WrongPasswordException");
-        }
+        appManager.getInstance().onRingCommandReceived(context, new RingCommand(new SMSPeer(VALID_PHONE_NUMBER), VALID_PASSWORD), ringtoneHandler.getDefaultRingtone(context));
     }
 
 }
