@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(context, "Command sent to " + phoneNumber.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         };
-        //Passing to the AppManager a new RingCommand built through the phone Number the user given
+        //Passing to the AppManager a new RingCommand built through the phone number given by the user
         try {
             AppManager.getInstance().sendCommand(context, new RingCommand(new SMSPeer(phoneNumber.getText().toString()), passwordManager.getPassword()), smsSentListener);
         } catch (InvalidTelephoneNumberException e) {
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if the user grant the SMS permissions
+     * Checks if permissions are granted, if not then requests them to the user
      */
     public void requestPermission() {
         if (!checkPermission())

@@ -11,7 +11,7 @@ import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.listeners.SMSReceivedListener;
 
 /**
- * Listener used to manages incoming sms and evaluates if they are valid commands for the application
+ * Listener used to manage incoming SMS and evaluate if they are valid commands for the application
  *
  * @author Alberto Ursino, Luca Crema
  */
