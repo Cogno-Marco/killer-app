@@ -1,4 +1,4 @@
-package com.eis.phoneringer.RingCommands;
+package com.eis.phoneringer.structure;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -74,7 +74,6 @@ public class RingtoneHandler {
      *
      * @param ringtone set as default
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void playRingtone(Ringtone ringtone) {
         playRingtone(ringtone, AudioAttributes.USAGE_ALARM);
     }
