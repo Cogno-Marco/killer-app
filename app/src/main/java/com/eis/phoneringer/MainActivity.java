@@ -35,23 +35,17 @@ public class MainActivity extends AppCompatActivity {
     private static Button ringButton = null;
     private static EditText phoneNumber = null;
     private static final String DEFAULT_PASSWORD = "password";
-    private static PasswordManager passwordManager = null;
+    private PasswordManager passwordManager = null;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         final Context context = getApplicationContext();
-        passwordManager = new PasswordManager(context);
         ringButton = findViewById(R.id.ring_button);
         phoneNumber = findViewById(R.id.phone_number);
-
-        /**
-         * Default password equals for all the devices
-         */
-        passwordManager.setPassword(DEFAULT_PASSWORD);
+        passwordManager = new PasswordManager(context);
 
         /**
          * Some tricks with permissions
@@ -62,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             requestPermission();
         }
+
+        /**
+         * Default password equals for all the devices
+         */
+        if (passwordManager.getPassword().isEmpty())
+            passwordManager.setPassword(DEFAULT_PASSWORD);
 
         ringButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             SMSHandler.getInstance().setup(getApplicationContext());
+            SMSHandler.getInstance().setReceivedListener(new ReceivedMessageListener(getApplicationContext()));
         } else {
             finish();
             System.exit(0);
