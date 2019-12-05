@@ -3,7 +3,7 @@ package com.eis.phoneringer.structure;
 import com.eis.smslibrary.SMSMessage;
 
 /**
- * Class used to parse RingCommand to SMSMessage and back *
+ * Class used to parse RingCommand to SMSMessage and back
  *
  * @author Alberto Ursino, Luca Crema, Marco Mariotto
  */
@@ -48,7 +48,8 @@ public class RingCommandHandler {
     }
 
     /**
-     * Extracts the password and the peer from the RingCommand and creates a SMSMessage object with the {@link #SPLIT_CHARACTER} in front
+     * Extracts the password and the peer from the RingCommand and creates a SMSMessage object
+     * The password is sent with the {@link #SPLIT_CHARACTER} in front
      *
      * @param ringCommand to parse, it must be a valid one
      * @return a SMSMessage object
