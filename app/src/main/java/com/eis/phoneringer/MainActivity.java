@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eis.phoneringer.structure.AppManager;
+import com.eis.phoneringer.structure.PasswordManager;
 import com.eis.phoneringer.structure.ReceivedMessageListener;
 import com.eis.phoneringer.structure.RingCommand;
 import com.eis.smslibrary.SMSHandler;
@@ -23,8 +24,6 @@ import com.eis.smslibrary.SMSPeer;
 import com.eis.smslibrary.exceptions.InvalidSMSMessageException;
 import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
 import com.eis.smslibrary.listeners.SMSSentListener;
-
-import it.lucacrema.preferences.PreferencesManager;
 
 /**
  * Test app: through this MainActivity we can test out our basic library for sending ring commands
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static Button ringButton = null;
     private static EditText phoneNumber = null;
-    private static final String STRING_KEY_PASSWORD = "stringKeyPassTest";
-    private static final String DEFAULT_PASSWORD = "_password";
+    private static final String DEFAULT_PASSWORD = "password";
+    private static PasswordManager passwordManager = null;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -45,13 +44,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Context context = getApplicationContext();
+        passwordManager = new PasswordManager(context);
         ringButton = findViewById(R.id.ring_button);
         phoneNumber = findViewById(R.id.phone_number);
 
         /**
          * Default password equals for all the devices
          */
-        PreferencesManager.setString(context, STRING_KEY_PASSWORD, DEFAULT_PASSWORD);
+        passwordManager.setPassword(DEFAULT_PASSWORD);
 
         /**
          * Some tricks with permissions
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         };
         //Passing to the AppManager a new RingCommand built through the phone Number the user given
         try {
-            AppManager.getInstance().sendCommand(context, new RingCommand(new SMSPeer(phoneNumber.getText().toString()), PreferencesManager.getString(context, STRING_KEY_PASSWORD)), smsSentListener);
+            AppManager.getInstance().sendCommand(context, new RingCommand(new SMSPeer(phoneNumber.getText().toString()), passwordManager.getPassword()), smsSentListener);
         } catch (InvalidTelephoneNumberException e) {
             Toast.makeText(context, "Invalid phone number", Toast.LENGTH_SHORT).show();
         } catch (InvalidSMSMessageException e) {
@@ -122,4 +122,5 @@ public class MainActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
+    
 }

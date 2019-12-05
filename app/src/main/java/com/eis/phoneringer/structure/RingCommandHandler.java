@@ -48,13 +48,13 @@ public class RingCommandHandler {
     }
 
     /**
-     * Extracts the password and the peer from the RingCommand and creates a SMSMessage object
+     * Extracts the password and the peer from the RingCommand and creates a SMSMessage object with the {@link #SPLIT_CHARACTER} in front
      *
      * @param ringCommand to parse, it must be a valid one
      * @return a SMSMessage object
      */
     public SMSMessage parseCommand(RingCommand ringCommand) {
-        return new SMSMessage(ringCommand.getPeer(), ringCommand.getPassword());
+        return new SMSMessage(ringCommand.getPeer(), SPLIT_CHARACTER + ringCommand.getPassword());
     }
 
 }
