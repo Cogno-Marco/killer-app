@@ -1,14 +1,13 @@
 package com.eis.phoneringer;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,10 +31,11 @@ import com.eis.smslibrary.listeners.SMSSentListener;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static Button ringButton = null;
-    private static EditText phoneNumber = null;
+    private Button ringButton;
+    private EditText phoneNumber;
     private static final String DEFAULT_PASSWORD = "password";
-    private PasswordManager passwordManager = null;
+    private static final int WAIT_TIME_PERMISSION = 1500;
+    private PasswordManager passwordManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phone_number);
         passwordManager = new PasswordManager(context);
 
-        /**
-         * Some tricks with permissions
-         */
+        //Some tricks with permissions
         if (checkPermission()) {
             SMSHandler.getInstance().setup(context);
             SMSHandler.getInstance().setReceivedListener(new ReceivedMessageListener(context));
@@ -57,40 +55,37 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
-        /**
-         * Default password equals for all the devices
-         */
+        //Default password equals for all the devices
         if (passwordManager.getPassword().isEmpty())
             passwordManager.setPassword(DEFAULT_PASSWORD);
 
         ringButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendCommand(context);
+                sendCommand();
             }
         });
     }
 
     /**
      * Sends a ring command to the phone number given by the user
-     *
-     * @param context The current application context
      */
-    private void sendCommand(final Context context) {
+    private void sendCommand() {
+        final Context context = getApplicationContext();
         //Callback when the command is sent
         SMSSentListener smsSentListener = new SMSSentListener() {
             @Override
             public void onSMSSent(SMSMessage message, SMSMessage.SentState sentState) {
-                Toast.makeText(context, "Command sent to " + phoneNumber.getText().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.sent_listener_toast) + phoneNumber.getText().toString(), Toast.LENGTH_SHORT).show();
             }
         };
         //Passing to the AppManager a new RingCommand built through the phone number given by the user
         try {
             AppManager.getInstance().sendCommand(context, new RingCommand(new SMSPeer(phoneNumber.getText().toString()), passwordManager.getPassword()), smsSentListener);
         } catch (InvalidTelephoneNumberException e) {
-            Toast.makeText(context, "Invalid phone number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.invalid_phone_number_toast), Toast.LENGTH_SHORT).show();
         } catch (InvalidSMSMessageException e) {
-            Toast.makeText(context, "Invalid SMSMessage object", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, getString(R.string.invalid_sms_message_toast), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,11 +93,8 @@ public class MainActivity extends AppCompatActivity {
      * @return true if the app has permissions, false otherwise
      */
     public boolean checkPermission() {
-        if (!(getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) ||
-                !(getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED))
-            return false;
-        else
-            return true;
+        return !((getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) ||
+                !(getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED));
     }
 
     /**
@@ -115,12 +107,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Context context = getApplicationContext();
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-            SMSHandler.getInstance().setup(getApplicationContext());
-            SMSHandler.getInstance().setReceivedListener(new ReceivedMessageListener(getApplicationContext()));
+            SMSHandler.getInstance().setup(context);
+            SMSHandler.getInstance().setReceivedListener(new ReceivedMessageListener(context));
         } else {
-            finish();
-            System.exit(0);
+            Toast.makeText(context, getString(R.string.permissions_denied_toast), Toast.LENGTH_SHORT).show();
+            //Let's wait the toast ends
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    requestPermission();
+                }
+            }, WAIT_TIME_PERMISSION);
         }
     }
 

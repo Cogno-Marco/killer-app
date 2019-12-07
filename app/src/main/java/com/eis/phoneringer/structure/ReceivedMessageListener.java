@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.eis.phoneringer.R;
 import com.eis.phoneringer.exceptions.IllegalPasswordException;
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.listeners.SMSReceivedListener;
@@ -21,7 +22,7 @@ public class ReceivedMessageListener implements SMSReceivedListener {
     private Context context;
 
     /**
-     * Constructor which define a context
+     * Constructor which defines a context
      *
      * @param context The current application context
      */
@@ -30,7 +31,7 @@ public class ReceivedMessageListener implements SMSReceivedListener {
     }
 
     /**
-     * Creates the RingCommand object upon receipt of the message and calls the class {@link AppManager} in order to manage it only if it isn't null
+     * Creates the {@link RingCommand} upon receipt of the message and calls the class {@link AppManager} if the RingCommand is not null
      *
      * @param smsMessage The SMSMessage object received
      * @throws IllegalPasswordException Exception thrown by the method "onRingCommandReceived" of the class {@link AppManager} when the password received is not valid
@@ -48,7 +49,7 @@ public class ReceivedMessageListener implements SMSReceivedListener {
                 AppManager.getInstance().onRingCommandReceived(context, ringCommand, ringtoneHandler.getDefaultRingtone(context));
             } catch (IllegalPasswordException e) {
                 //Password from the ring command received is not correct
-                Toast.makeText(context, smsMessage.getPeer() + " sent you a wrong password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, smsMessage.getPeer() + context.getString(R.string.invalid_password_received_toast), Toast.LENGTH_SHORT).show();
             }
         }
     }

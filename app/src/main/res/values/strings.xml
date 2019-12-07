@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PhoneRinger</string>
+    <string name="permissions_denied_toast">App need permissions</string>
+    <string name="invalid_phone_number_toast">Invalid phone number</string>
+    <string name="invalid_sms_message_toast">Invalid SMSMessage</string>
+    <string name="sent_listener_toast">Command sent to </string>
+    <string name="invalid_password_received_toast"> sent you a wrong password</string>
 </resources>
