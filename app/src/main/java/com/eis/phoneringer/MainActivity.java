@@ -31,11 +31,11 @@ import com.eis.smslibrary.listeners.SMSSentListener;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private Button ringButton;
-    private EditText phoneNumber;
+
     private static final String DEFAULT_PASSWORD = "password";
     private static final int WAIT_TIME_PERMISSION = 1500;
     private PasswordManager passwordManager;
+    private EditText phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Context context = getApplicationContext();
-        ringButton = findViewById(R.id.ring_button);
+        Button ringButton = findViewById(R.id.ring_button);
         phoneNumber = findViewById(R.id.phone_number);
         passwordManager = new PasswordManager(context);
 
@@ -90,11 +90,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @return true if the app has permissions, false otherwise
+     * @return true if the app has both RECEIVE_SMS and SEND_SMS permissions, false otherwise
      */
     public boolean checkPermission() {
-        return !((getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) ||
-                !(getApplicationContext().checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED));
+        Context context = getApplicationContext();
+        return ((context.checkSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) &&
+                (context.checkSelfPermission(Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED));
     }
 
     /**
