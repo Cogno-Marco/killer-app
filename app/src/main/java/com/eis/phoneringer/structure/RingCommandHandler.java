@@ -10,7 +10,6 @@ import com.eis.smslibrary.SMSMessage;
 public class RingCommandHandler {
 
     public static final char COMMAND_IDENTIFIER = '_';
-    private static final int PASSWORD_INDEX = 1;
 
     /**
      * Instance of the class that is instantiated in getInstance method
@@ -41,11 +40,8 @@ public class RingCommandHandler {
      */
     public RingCommand parseMessage(SMSMessage smsMessage) {
         String messageContent = smsMessage.getData();
-        if (messageContent.charAt(0) == COMMAND_IDENTIFIER) {
-            String[] parts = messageContent.split("" + COMMAND_IDENTIFIER);
-            //parts[0] is empty
-            return new RingCommand(smsMessage.getPeer(), parts[PASSWORD_INDEX]);
-        }
+        if (messageContent.charAt(0) == COMMAND_IDENTIFIER)
+            return new RingCommand(smsMessage.getPeer(), messageContent.substring(1));
         return null;
     }
 
