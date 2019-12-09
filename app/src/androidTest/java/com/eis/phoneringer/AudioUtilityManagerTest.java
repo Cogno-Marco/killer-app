@@ -8,7 +8,7 @@ import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.gruppo4.audioUtility.AudioUtilityManager;
+import com.eis.audioUtility.AudioUtilityManager;
 
 import org.junit.Assert;
 import org.junit.Before;
