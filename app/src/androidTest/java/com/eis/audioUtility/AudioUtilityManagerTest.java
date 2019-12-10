@@ -1,7 +1,5 @@
 package com.eis.audioUtility;
 
-import static org.junit.Assert.*;
-
 /**
  * @author Francesco Bau', Alberto Ursino
  */
@@ -9,8 +7,6 @@ import static org.junit.Assert.*;
 import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
-
-import com.eis.audioUtility.AudioUtilityManager;
 
 import org.junit.Assert;
 import org.junit.Before;
