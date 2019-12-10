@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PhoneRinger.iml" filepath="$PROJECT_DIR$/PhoneRinger.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preferences/preferences.iml" filepath="$PROJECT_DIR$/preferences/preferences.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/smslibrary/smslibrary.iml" filepath="$PROJECT_DIR$/library/smslibrary/smslibrary.iml" />
     </modules>
   </component>
