@@ -4,6 +4,5 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/android-preferences" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/library" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/smslibrary" vcs="Git" />
   </component>
 </project>
