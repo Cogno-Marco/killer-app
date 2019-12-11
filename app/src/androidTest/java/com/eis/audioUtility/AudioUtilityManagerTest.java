@@ -1,8 +1,5 @@
 package com.eis.audioUtility;
 
-/**
- * @author Francesco Bau', Alberto Ursino
- */
 
 import android.content.Context;
 
@@ -12,6 +9,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * @author Francesco Bau', Alberto Ursino
+ */
 public class AudioUtilityManagerTest {
 
     Context context;
@@ -33,15 +33,10 @@ public class AudioUtilityManagerTest {
         }
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setAlarmVolume_percentage_isTooHigh() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, 101);
-        } catch (IllegalArgumentException e) {
-            // Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, 101);
+        Assert.fail("Should have thrown IllegalArgumentException");
     }
 
     @Test
@@ -68,39 +63,24 @@ public class AudioUtilityManagerTest {
         }
     }
 
+    // It fails automatically if an exception is thrown.
     @Test
     public void getCurrentAlarmVolume_method_isOK() {
-        try {
-            AudioUtilityManager.getVolume(context, AudioUtilityManager.AUMStream.ALARM);
-            //Success
-        } catch (Exception e) {
-            Assert.fail(e.getStackTrace() + "\nIt's NOT supposed to fail!");
-        }
+        AudioUtilityManager.getVolume(context, AudioUtilityManager.AUMStream.ALARM);
     }
 
 //-----------------------------------------------------------------
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setMusicVolume_percentage_isTooLow() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, -1);
-            Assert.fail("Should have thrown IllegalArgumentException.");
-        } catch (IllegalArgumentException e) {
-            //Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, -1);
+        Assert.fail("Should have thrown IllegalArgumentException.");
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setMusicVolume_percentage_isTooHigh() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.MUSIC, 101);
-        } catch (IllegalArgumentException e) {
-            // Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.MUSIC, 101);
+        Assert.fail("Should have thrown IllegalArgumentException");
     }
 
     @Test
@@ -139,27 +119,16 @@ public class AudioUtilityManagerTest {
 
 //-----------------------------------------------------------------
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setRingVolume_percentage_isTooLow() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, -1);
-            Assert.fail("Should have thrown IllegalArgumentException.");
-        } catch (IllegalArgumentException e) {
-            //Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, -1);
+        Assert.fail("Should have thrown IllegalArgumentException.");
     }
 
     @Test
     public void setRingVolume_percentage_isTooHigh() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, 101);
-        } catch (IllegalArgumentException e) {
-            // Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, 101);
+        Assert.fail("Should have thrown IllegalArgumentException");
     }
 
     @Test
