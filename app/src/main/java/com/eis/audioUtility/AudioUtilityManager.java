@@ -68,9 +68,9 @@ public class AudioUtilityManager {
      */
     public static void setVolume(Context context, AUMStream stream, int percentage) throws IllegalArgumentException {
         if (percentage < MIN_PERCENTAGE)
-            throw new IllegalArgumentException(" Your value is too low. Please insert a value between 0 and 100.");
+            throw new IllegalArgumentException("Your value is too low. Please insert a value between 0 and 100.");
         if (percentage > MAX_PERCENTAGE)
-            throw new IllegalArgumentException(" Your value is too high. Please insert a value between 0 and 100.");
+            throw new IllegalArgumentException("Your value is too high. Please insert a value between 0 and 100.");
         int maxVolume = getMaxVolume(context, stream);
 
         // Calculate the real value of the new volume
@@ -122,7 +122,7 @@ public class AudioUtilityManager {
             case MUSIC:
                 return AudioManager.STREAM_MUSIC;
             default:
-                throw new IllegalArgumentException("\nIllegal Stream. It should be ALARM, RING or MUSIC .");
+                throw new IllegalArgumentException("Illegal Stream. It should be ALARM, RING or MUSIC .");
         }
     }
 
