@@ -15,27 +15,23 @@ import org.junit.Test;
 public class AudioUtilityManagerTest {
 
     Context context;
+    private static final int INVALID_PERCENTAGE_LOW = -1;
+    private static final int INVALID_PERCENTAGE_HIGH = 101;
 
     @Before
     public void init() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setAlarmVolume_percentage_isTooLow() {
-        try {
-            AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, -1);
-            Assert.fail("Should have thrown IllegalArgumentException.");
-        } catch (IllegalArgumentException e) {
-            //Success
-        } catch (Exception x) {
-            Assert.fail(x.getStackTrace() + "\nShould have thrown IllegalArgumentException");
-        }
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, INVALID_PERCENTAGE_LOW);
+        Assert.fail("Should have thrown IllegalArgumentException.");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setAlarmVolume_percentage_isTooHigh() {
-        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, 101);
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, INVALID_PERCENTAGE_HIGH);
         Assert.fail("Should have thrown IllegalArgumentException");
     }
 
@@ -73,13 +69,13 @@ public class AudioUtilityManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setMusicVolume_percentage_isTooLow() {
-        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, -1);
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.ALARM, INVALID_PERCENTAGE_LOW);
         Assert.fail("Should have thrown IllegalArgumentException.");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setMusicVolume_percentage_isTooHigh() {
-        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.MUSIC, 101);
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.MUSIC, INVALID_PERCENTAGE_HIGH);
         Assert.fail("Should have thrown IllegalArgumentException");
     }
 
@@ -121,13 +117,13 @@ public class AudioUtilityManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setRingVolume_percentage_isTooLow() {
-        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, -1);
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, INVALID_PERCENTAGE_LOW);
         Assert.fail("Should have thrown IllegalArgumentException.");
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void setRingVolume_percentage_isTooHigh() {
-        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, 101);
+        AudioUtilityManager.setVolume(context, AudioUtilityManager.AUMStream.RING, INVALID_PERCENTAGE_HIGH);
         Assert.fail("Should have thrown IllegalArgumentException");
     }
 
