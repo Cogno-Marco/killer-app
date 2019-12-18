@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import androidx.annotation.NonNull;
+
 import static android.content.Context.AUDIO_SERVICE;
 
 /**
@@ -23,6 +25,9 @@ public class AudioUtilityManager {
     private static final int VIBRATION_DELAY = 500;
     private static final int VIBRATION_REPEAT_CODE = 1;
 
+    // Needed to don't show any flag from any Volume variation.
+    private static final int ZERO_FLAG_CODE = 0;
+
     public enum AUMStream {
         ALARM,
         RING,
@@ -30,7 +35,7 @@ public class AudioUtilityManager {
     }
 
     /**
-     * @param context The current Context.
+     * @param context The current Context
      * @return The current AudioManager instance.
      */
     protected static AudioManager getAudioManager(Context context) {
@@ -63,10 +68,11 @@ public class AudioUtilityManager {
      *
      * @param context    The current Context.
      * @param stream     The chosen stream (ALARM, RING or MUSIC).
-     * @param percentage Target volume (expressed in %).
+     * @param percentage Target volume (expressed in %). It can't be null.
+     * @param visibility makes the user choose to show the flag or not. It can't be null.
      * @throws IllegalArgumentException if percentage is not between 0 and 100.
      */
-    public static void setVolume(Context context, AUMStream stream, int percentage) throws IllegalArgumentException {
+    public static void setVolume(Context context, AUMStream stream, @NonNull int percentage, @NonNull boolean visibility) throws IllegalArgumentException {
         if (percentage < MIN_PERCENTAGE)
             throw new IllegalArgumentException("Your value is too low. Please insert a value between 0 and 100.");
         if (percentage > MAX_PERCENTAGE)
@@ -77,14 +83,32 @@ public class AudioUtilityManager {
         int newVolume = maxVolume * percentage;
         newVolume = Math.round(newVolume / MAX_PERCENTAGE);
 
-        // Sets the Volume.
-        getAudioManager(context).setStreamVolume(
+        if (visibility == true)
+            // Sets the Volume.
+            getAudioManager(context).setStreamVolume(
+                    getStream(stream),
+                    newVolume,
+                    AudioManager.FLAG_SHOW_UI
+            );
+        else getAudioManager(context).setStreamVolume(
                 getStream(stream),
-                newVolume,
-                AudioManager.FLAG_SHOW_UI
+                newVolume, ZERO_FLAG_CODE
         );
 
+    }
 
+
+    /**
+     * Overload of method setVolume(Context,AUMStream,int,boolean), with default visibility.
+     *
+     * @param context    The current Context.
+     * @param stream     The chosen stream (ALARM, RING or MUSIC).
+     * @param percentage Target volume (expressed in %). It can't be null.
+     * @throws IllegalArgumentException if percentage is not between 0 and 100.
+     */
+    public static void setVolume(Context context, AUMStream stream, @NonNull int percentage) {
+        // By default, flag is shown
+        setVolume(context, stream, percentage, true);
     }
 
     /**
