@@ -6,13 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/ring_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="22dp"
+        android:text="RING"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_number" />
 
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_width="175dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="+39..."
+        android:inputType="phone"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advice1" />
+
+    <TextView
+        android:id="@+id/advice2"
+        android:layout_width="325dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="62dp"
+        android:text="Close the app to stop the ringtone \n This is a demo :c"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ring_button" />
+
+    <TextView
+        android:id="@+id/advice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
+        android:text="Careful it is loud!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

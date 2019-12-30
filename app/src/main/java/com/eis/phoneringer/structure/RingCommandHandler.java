@@ -3,13 +3,13 @@ package com.eis.phoneringer.structure;
 import com.eis.smslibrary.SMSMessage;
 
 /**
- * Class used to parse RingCommand to SMSMessage and back *
+ * Class used to parse RingCommand to SMSMessage and back
  *
  * @author Alberto Ursino, Luca Crema, Marco Mariotto
  */
 public class RingCommandHandler {
 
-    public static final String SPLIT_CHARACTER = "_";
+    public static final char COMMAND_IDENTIFIER = '_';
 
     /**
      * Instance of the class that is instantiated in getInstance method
@@ -32,29 +32,28 @@ public class RingCommandHandler {
     }
 
     /**
-     * Extracts the password from the message received and create a RingCommand
-     * A valid content is the following: "_password"
+     * Extracts the password from the message received and creates a RingCommand
+     * A valid command is the following: "_password"
      *
-     * @param smsMessage to parse
-     * @return a RingCommand object, null if the message doesn't contain a valid one
+     * @param smsMessage {@link SMSMessage} object received
+     * @return a {@link RingCommand} object, null if the message is not a valid command
      */
     public RingCommand parseMessage(SMSMessage smsMessage) {
-        if ((smsMessage.getData().charAt(0) + "").equals(SPLIT_CHARACTER)) {
-            String[] parts = smsMessage.getData().split(SPLIT_CHARACTER);
-            //parts[0] is empty, parts[1] contains the password
-            return new RingCommand(smsMessage.getPeer(), parts[1]);
-        }
+        String messageContent = smsMessage.getData();
+        if (messageContent.charAt(0) == COMMAND_IDENTIFIER)
+            return new RingCommand(smsMessage.getPeer(), messageContent.substring(1));
         return null;
     }
 
     /**
      * Extracts the password and the peer from the RingCommand and creates a SMSMessage object
+     * The password is sent with the {@link #COMMAND_IDENTIFIER} in front
      *
      * @param ringCommand to parse, it must be a valid one
      * @return a SMSMessage object
      */
     public SMSMessage parseCommand(RingCommand ringCommand) {
-        return new SMSMessage(ringCommand.getPeer(), ringCommand.getPassword());
+        return new SMSMessage(ringCommand.getPeer(), COMMAND_IDENTIFIER + ringCommand.getPassword());
     }
 
 }
