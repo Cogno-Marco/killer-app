@@ -35,7 +35,9 @@ public class AudioUtilityManager {
     }
 
     /**
-     * @param context The current Context
+     * Returns the current AudioManager instance.
+     *
+     * @param context The current Context.
      * @return The current AudioManager instance.
      */
     protected static AudioManager getAudioManager(Context context) {
@@ -43,8 +45,10 @@ public class AudioUtilityManager {
     }
 
     /**
+     * Returns the percentage of the current steam Volume.
+     *
      * @param context The current Context.
-     * @param stream  The chosen stream (ALARM, RING or MUSIC).
+     * @param stream  The chosen Stream (ALARM, RING or MUSIC).
      * @return The current stream Volume (in percentage).
      */
     public static int getVolume(Context context, AUMStream stream) {
@@ -55,21 +59,23 @@ public class AudioUtilityManager {
     }
 
     /**
+     * Returns the maximum Stream Volume.
+     *
      * @param context The current Context.
-     * @param stream  The chosen stream (ALARM, RING or MUSIC).
-     * @return The maximum stream volume (real value, not percentage).
+     * @param stream  The chosen Stream (ALARM, RING or MUSIC).
+     * @return The maximum Stream Volume (real value, not percentage).
      */
     private static int getMaxVolume(Context context, AUMStream stream) {
         return getAudioManager(context).getStreamMaxVolume(getStream(stream));
     }
 
     /**
-     * Sets up the stream Volume, given a certain percentage.
+     * Sets up the Stream Volume, given a certain percentage.
      *
      * @param context    The current Context.
-     * @param stream     The chosen stream (ALARM, RING or MUSIC).
-     * @param percentage Target volume (expressed in %). It can't be null.
-     * @param visibility makes the user choose to show the flag or not. It can't be null.
+     * @param stream     The chosen Stream (ALARM, RING or MUSIC).
+     * @param percentage Target Volume (expressed in %). It can't be null.
+     * @param visibility Makes the user choose to show the flag or not. It can't be null.
      * @throws IllegalArgumentException if percentage is not between 0 and 100.
      */
     public static void setVolume(Context context, AUMStream stream, @NonNull int percentage, @NonNull boolean visibility) throws IllegalArgumentException {
@@ -79,7 +85,7 @@ public class AudioUtilityManager {
             throw new IllegalArgumentException("Your value is too high. Please insert a value between 0 and 100.");
         int maxVolume = getMaxVolume(context, stream);
 
-        // Calculate the real value of the new volume
+        // Calculate the real value of the new Volume
         int newVolume = maxVolume * percentage;
         newVolume = Math.round(newVolume / MAX_PERCENTAGE);
 
@@ -102,8 +108,8 @@ public class AudioUtilityManager {
      * Overload of method setVolume(Context,AUMStream,int,boolean), with default visibility.
      *
      * @param context    The current Context.
-     * @param stream     The chosen stream (ALARM, RING or MUSIC).
-     * @param percentage Target volume (expressed in %). It can't be null.
+     * @param stream     The chosen Stream (ALARM, RING or MUSIC).
+     * @param percentage Target Volume (expressed in %). It can't be null.
      * @throws IllegalArgumentException if percentage is not between 0 and 100.
      */
     public static void setVolume(Context context, AUMStream stream, @NonNull int percentage) {
@@ -112,10 +118,10 @@ public class AudioUtilityManager {
     }
 
     /**
-     * Sets up the stream Volume to its maximum value (in percentage).
+     * Sets up the Stream Volume to its maximum value (in percentage).
      *
      * @param context The current Context.
-     * @param stream  The chosen stream (ALARM, RING or MUSIC).
+     * @param stream  The chosen Stream (ALARM, RING or MUSIC).
      */
     public static void setVolumeToMax(Context context, AUMStream stream) {
         setVolume(context, stream, MAX_PERCENTAGE);
@@ -125,16 +131,18 @@ public class AudioUtilityManager {
      * Sets up the Stream Volume to its minimum value (in percentage).
      *
      * @param context The current Context.
-     * @param stream  The chosen stream (ALARM, RING or MUSIC).
+     * @param stream  The chosen Stream (ALARM, RING or MUSIC).
      */
     public static void setVolumeToMin(Context context, AUMStream stream) {
         setVolume(context, stream, MIN_PERCENTAGE);
     }
 
     /**
+     * Returns the constant representing the Stream.
+     *
      * @param stream The chosen Stream (ALARM, RING or MUSIC).
      * @return The constant representing the Stream.
-     * @throws IllegalArgumentException if stream is not valid (It shouldn't happen, thanks to the enum type).
+     * @throws IllegalArgumentException if parameter stream is not valid (It shouldn't happen, thanks to the enum type).
      */
     private static int getStream(AUMStream stream) throws IllegalArgumentException {
 
@@ -151,6 +159,8 @@ public class AudioUtilityManager {
     }
 
     /**
+     * Returns the current Vibrator instance.
+     *
      * @param context The current Context.
      * @return The current Vibrator instance.
      */
@@ -159,7 +169,7 @@ public class AudioUtilityManager {
     }
 
     /**
-     * Makes the target device vibrate.
+     * Makes the target device vibrate in one shot. Vibration time is set as default.
      *
      * @param context The current Context.
      */
@@ -175,7 +185,7 @@ public class AudioUtilityManager {
     }
 
     /**
-     * Makes the target device vibrate multiple times, with default pattern
+     * Makes the target device vibrate multiple times, with default pattern.
      *
      * @param context The current Context.
      */
@@ -192,7 +202,7 @@ public class AudioUtilityManager {
     }
 
     /**
-     * Makes the target device vibrate multiple times, with a certain pattern
+     * Makes the target device vibrate multiple times, with a certain pattern.
      *
      * @param context The current Context.
      * @param pattern The pattern of the vibration, created in couples of pause-vibration.
