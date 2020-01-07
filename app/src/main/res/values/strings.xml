@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhoneRinger</string>
+    <string name="app_name">ringUp</string>
     <string name="permissions_denied_toast">App needs permissions</string>
     <string name="invalid_phone_number_toast">Invalid phone number</string>
     <string name="invalid_sms_message_toast">Invalid SMSMessage</string>

@@ -1,6 +1,10 @@
 package com.eis.phoneringer.structure;
 
+import android.util.Log;
+
 import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.exceptions.InvalidSMSMessageException;
+import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
 
 /**
  * Class used to parse RingCommand to SMSMessage and back
@@ -9,7 +13,7 @@ import com.eis.smslibrary.SMSMessage;
  */
 public class RingCommandHandler {
 
-    public static final char COMMAND_IDENTIFIER = '_';
+    public static final String SIGNATURE = "ringUp password: ";
 
     /**
      * Instance of the class that is instantiated in getInstance method
@@ -32,28 +36,39 @@ public class RingCommandHandler {
     }
 
     /**
-     * Extracts the password from the message received and creates a RingCommand
-     * A valid command is the following: "_password"
+     * Extracts the password from the message received and create a RingCommand
+     * A valid content is the following: "ringUp password: password"
      *
-     * @param smsMessage {@link SMSMessage} object received
-     * @return a {@link RingCommand} object, null if the message is not a valid command
+     * @param smsMessage to parse
+     * @return a {@link RingCommand} object, null if the message doesn't contain a valid one
      */
     public RingCommand parseMessage(SMSMessage smsMessage) {
-        String messageContent = smsMessage.getData();
-        if (messageContent.charAt(0) == COMMAND_IDENTIFIER)
-            return new RingCommand(smsMessage.getPeer(), messageContent.substring(1));
-        return null;
+        String smsMessageData = smsMessage.getData();
+        Log.d("parseMessage", "Message arrived: " + smsMessageData);
+        //Control if the smsMessage received contains at least 17 character (SIGNATURE length)
+        if (!(smsMessageData.length() > SIGNATURE.length())) {
+            Log.d("RingCommandHandler", "The smsMessage received is not long enough, it can't be a right ring command");
+            return null;
+        } else {
+            String possibleSignature = smsMessageData.substring(0, SIGNATURE.length());
+            if (possibleSignature.equals(SIGNATURE)) {
+                return new RingCommand(smsMessage.getPeer(), smsMessageData.substring(17));
+            } else {
+                Log.d("RingCommandHandler", "The ring command received doesn't contain the right signature");
+                return null;
+            }
+        }
     }
 
     /**
      * Extracts the password and the peer from the RingCommand and creates a SMSMessage object
-     * The password is sent with the {@link #COMMAND_IDENTIFIER} in front
      *
      * @param ringCommand to parse, it must be a valid one
      * @return a SMSMessage object
+     * @throws InvalidSMSMessageException      thrown when an SMSMessage received invalid params
+     * @throws InvalidTelephoneNumberException thrown when the phone number is not valid
      */
-    public SMSMessage parseCommand(RingCommand ringCommand) {
-        return new SMSMessage(ringCommand.getPeer(), COMMAND_IDENTIFIER + ringCommand.getPassword());
+    public SMSMessage parseCommand(RingCommand ringCommand) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
+        return new SMSMessage(ringCommand.getPeer(), ringCommand.getPassword());
     }
-
 }

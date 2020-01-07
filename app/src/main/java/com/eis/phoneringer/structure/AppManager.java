@@ -8,7 +8,7 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 
 import com.eis.phoneringer.exceptions.IllegalPasswordException;
-import com.eis.smslibrary.SMSHandler;
+import com.eis.smslibrary.SMSManager;
 import com.eis.smslibrary.exceptions.InvalidSMSMessageException;
 import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
 import com.eis.smslibrary.listeners.SMSSentListener;
@@ -20,7 +20,8 @@ import com.eis.smslibrary.listeners.SMSSentListener;
  */
 public class AppManager {
 
-    private static final int TIMEOUT_TIME = 30 * 1000; //30 seconds
+    private static final int TIMEOUT_TIME = 20 * 1000;
+    public static Ringtone defaultRing;
 
     /**
      * Instance of the class that is instantiated in getInstance method
@@ -51,6 +52,8 @@ public class AppManager {
      * @throws IllegalPasswordException Exception thrown when the password received is not valid
      */
     public void onRingCommandReceived(Context context, @NonNull RingCommand ringCommand, final Ringtone ringtone) throws IllegalPasswordException {
+        defaultRing = ringtone;
+
         //Instantiation of the RingtoneHandler singleton class, will be used below
         final RingtoneHandler ringtoneHandler = RingtoneHandler.getInstance();
 
@@ -60,6 +63,8 @@ public class AppManager {
 
         //Exception weren't thrown so let's play the ringtone!
         ringtoneHandler.playRingtone(ringtone);
+        //TODO We need the AudioUtilityManager class in order to set the volume at the max value
+
         //Timer: the ringtone is playing for TIMEOUT_TIME seconds.
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -70,7 +75,7 @@ public class AppManager {
     }
 
     /**
-     * Method used to send a RingCommand via SMS using the library class {@link SMSHandler}
+     * Method used to send a RingCommand via SMS using the library class {@link SMSManager}
      *
      * @param context         of the application
      * @param ringCommand     to send
@@ -79,9 +84,7 @@ public class AppManager {
      * @throws InvalidTelephoneNumberException could be launched by the RingCommandHandler method "parseCommand"
      */
     public void sendCommand(Context context, @NonNull RingCommand ringCommand, SMSSentListener smsSentListener) throws InvalidSMSMessageException, InvalidTelephoneNumberException {
-        SMSHandler smsHandler = SMSHandler.getInstance();
-        smsHandler.setup(context);
-        smsHandler.sendMessage(RingCommandHandler.getInstance().parseCommand(ringCommand), smsSentListener);
+        SMSManager.getInstance().sendMessage(RingCommandHandler.getInstance().parseCommand(ringCommand), smsSentListener, context);
     }
 
     /**
