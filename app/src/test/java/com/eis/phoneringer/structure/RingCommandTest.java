@@ -14,7 +14,7 @@ import org.junit.Test;
 public class RingCommandTest {
 
     RingCommand ringCommand = null;
-    private static final String VALID_NUMBER = "+391111111111";
+    private static final String VALID_NUMBER = "+393462588745";
     private static final String VALID_PASSWORD = "password";
     private static final String EMPTY_PASSWORD = "";
     private static final String ONLY_NUMBERS_PASSWORD = "123456789";

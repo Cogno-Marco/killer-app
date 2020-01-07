@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PhoneRinger.iml" filepath="$PROJECT_DIR$/PhoneRinger.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/smslibrary/smslibrary.iml" filepath="$PROJECT_DIR$/library/smslibrary/smslibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ringUp.iml" filepath="$PROJECT_DIR$/ringUp.iml" />
     </modules>
   </component>
 </project>
